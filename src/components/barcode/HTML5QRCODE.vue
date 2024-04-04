@@ -7,7 +7,7 @@
   const turn = ref(0);
   const code = ref("");
   const cameraId = ref("");
-  const onScanSuccess = (decodedText, decodedResult) => {
+  const onScanSuccess = (decodedText: string, decodedResult: any) => {
     console.log(`Code matched = ${decodedText}`, decodedResult);
     code.value = decodedText;
     turn.value = turn.value + 1;

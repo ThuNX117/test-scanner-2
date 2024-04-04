@@ -6,7 +6,7 @@
   const code = ref("-");
 
   const turn = ref(0);
-  const onDetect = (detectedCodes: any) => {
+  const onDetect = (detectedCodes) => {
     console.log({ detectedCodes });
     if (detectedCodes[0]) {
       code.value = detectedCodes[0].rawValue;
