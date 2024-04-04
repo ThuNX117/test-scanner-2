@@ -1,14 +1,13 @@
 <script setup lang="ts">
   import { onBeforeUnmount, onMounted, ref } from "vue";
 
-  import { Html5Qrcode } from "html5-qrcode";
+  import { Html5Qrcode, qrCodeSuccessCallback } from "html5-qrcode";
 
   const elementId = ref("reader");
   const turn = ref(0);
   const code = ref("");
   const cameraId = ref("");
-  const onScanSuccess = (decodedText: string, decodedResult: any) => {
-    console.log(`Code matched = ${decodedText}`, decodedResult);
+  const onScanSuccess: qrCodeSuccessCallback = (decodedText: string) => {
     code.value = decodedText;
     turn.value = turn.value + 1;
   };
