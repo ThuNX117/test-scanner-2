@@ -24,7 +24,7 @@ let html5QrCode: Html5Qrcode | null = null;
       return;
     }
     console.log("cameraId", cameraId.value);
-    html5QrCode = new Html5Qrcode("reader");
+
     const videoConstraints = {};
     const config = {
       fps: 10,
@@ -33,6 +33,7 @@ let html5QrCode: Html5Qrcode | null = null;
     html5QrCode?.start({ facingMode: "environment" }, config, onScanSuccess, () => {});
   }
   onMounted(() => {
+    html5QrCode = new Html5Qrcode("reader");
     console.log("onMounted");
     startScan();
   });
