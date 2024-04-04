@@ -15,7 +15,6 @@ const code = ref("-");
     }
   };
   const videoConstraints = {
-    facingMode: "environment",
     width: 500,
     height: 300,
   };
