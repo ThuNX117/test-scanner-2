@@ -7,7 +7,8 @@ import {
 
 import { Html5Qrcode } from 'html5-qrcode';
 
-const elementId = ref("reader");
+let html5QrCode: Html5Qrcode | null = null;
+  const elementId = ref("reader");
   const turn = ref(0);
   const code = ref("");
   const cameraId = ref("");
@@ -16,21 +17,16 @@ const elementId = ref("reader");
     turn.value = turn.value + 1;
   };
 
-  const html5QrCode = ref<Html5Qrcode>();
+  // const html5QrCode = ref<Html5Qrcode>();
   async function startScan() {
     console.log("cameraId", cameraId.value);
-    html5QrCode.value = new Html5Qrcode(elementId.value);
+    html5QrCode = new Html5Qrcode(elementId.value);
     const videoConstraints = {};
     const config = {
       fps: 10,
       videoConstraints,
     };
-    html5QrCode.value.start(
-      { facingMode: { exact: "environment" } },
-      config,
-      onScanSuccess,
-      () => {}
-    );
+    html5QrCode?.start({ facingMode: "environment" }, config, onScanSuccess, () => {});
   }
   onMounted(() => {
     console.log("onMounted");
