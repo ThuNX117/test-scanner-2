@@ -8,7 +8,6 @@ import {
 import { Html5Qrcode } from 'html5-qrcode';
 
 let html5QrCode: Html5Qrcode | null = null;
-  const elementId = ref("reader");
   const turn = ref(0);
   const code = ref("");
   const cameraId = ref("");
@@ -19,8 +18,13 @@ let html5QrCode: Html5Qrcode | null = null;
 
   // const html5QrCode = ref<Html5Qrcode>();
   async function startScan() {
+    if (html5QrCode === null) {
+      alert("html5QrCode null");
+
+      return;
+    }
     console.log("cameraId", cameraId.value);
-    html5QrCode = new Html5Qrcode(elementId.value);
+    html5QrCode = new Html5Qrcode("reader");
     const videoConstraints = {};
     const config = {
       fps: 10,
@@ -34,7 +38,10 @@ let html5QrCode: Html5Qrcode | null = null;
   });
 
   onBeforeUnmount(() => {
-    html5QrCode.value?.stop();
+    if (html5QrCode === null) {
+      return;
+    }
+    html5QrCode?.stop();
     console.log("stoped ");
   });
 </script>
