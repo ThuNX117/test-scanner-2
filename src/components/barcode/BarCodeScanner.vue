@@ -15,8 +15,7 @@ const code = ref("-");
     }
   };
   const videoConstraints = {
-    width: 500,
-    height: 300,
+    facingMode: "environment",
   };
 </script>
 <template>

@@ -24,7 +24,6 @@ const elementId = ref("reader");
     const config = {
       fps: 10,
       videoConstraints,
-      qrbox: 250,
     };
     html5QrCode.value.start(
       { facingMode: { exact: "environment" } },
