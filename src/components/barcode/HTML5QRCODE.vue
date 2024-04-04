@@ -16,7 +16,7 @@
   const onScanFailure = (error) => {
     console.warn(`Code scan error = ${error}`);
   };
-  const html5QrCode = ref<any>();
+  const html5QrCode = ref<Html5Qrcode>();
   async function startScan() {
     console.log("cameraId", cameraId.value);
     html5QrCode.value = new Html5Qrcode(elementId.value);

@@ -1,17 +1,18 @@
 <script lang="ts" setup>
   import { ref } from "vue";
 
-  import { QrcodeStream } from "vue-qrcode-reader";
+  import { DetectedBarcode, QrcodeStream } from "vue-qrcode-reader";
 
   const code = ref("-");
 
   const turn = ref(0);
-  const onDetect = (detectedCodes: any) => {
+  const onDetect = (detectedCodes: DetectedBarcode[]) => {
     console.log({ detectedCodes });
     if (detectedCodes[0]) {
       code.value = detectedCodes[0].rawValue;
       turn.value = turn.value + 1;
     }
+    HTML5QRCODE.vue;
     // ...
   };
   const videoConstraints = {
