@@ -1,20 +1,21 @@
 <script setup lang="ts">
-  import { onBeforeUnmount, onMounted, ref } from "vue";
+import {
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from 'vue';
 
-  import { Html5Qrcode, qrCodeSuccessCallback } from "html5-qrcode";
+import { Html5Qrcode } from 'html5-qrcode';
 
-  const elementId = ref("reader");
+const elementId = ref("reader");
   const turn = ref(0);
   const code = ref("");
   const cameraId = ref("");
-  const onScanSuccess: qrCodeSuccessCallback = (decodedText: string) => {
+  const onScanSuccess = (decodedText: string) => {
     code.value = decodedText;
     turn.value = turn.value + 1;
   };
 
-  const onScanFailure = (error) => {
-    console.warn(`Code scan error = ${error}`);
-  };
   const html5QrCode = ref<Html5Qrcode>();
   async function startScan() {
     console.log("cameraId", cameraId.value);
@@ -24,12 +25,11 @@
       fps: 10,
       videoConstraints,
     };
-    // If you want to prefer front camera
     html5QrCode.value.start(
-      { facingMode: "environment", whiteBalanceMode: "continuous" },
+      { facingMode: "environment" },
       config,
       onScanSuccess,
-      onScanFailure
+      () => {}
     );
   }
   onMounted(() => {
@@ -38,7 +38,7 @@
   });
 
   onBeforeUnmount(() => {
-    html5QrCode.value.stop();
+    html5QrCode.value?.stop();
     console.log("stoped ");
   });
 </script>
