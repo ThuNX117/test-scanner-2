@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import { ref } from "vue";
+import { ref } from 'vue';
 
-  import BarCodeScanner from "../barcode/BarCodeScanner.vue";
-  import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
+import BarCodeScanner from '../barcode/BarCodeScanner.vue';
+import HTML5QRCODE from '../barcode/HTML5QRCODE.vue';
 
-  const scannerName = ref("HTML5QRCODE");
+const scannerName = ref("BarCodeScanner");
   const bothRun = ref(false);
   const toggle = () => {
     if (scannerName.value === "BarCodeScanner") {
