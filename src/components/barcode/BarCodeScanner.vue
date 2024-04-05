@@ -14,10 +14,10 @@
       turn.value = turn.value + 1;
     }
   };
-  // const props = defineProps<{ cameraId?: string }>();
+  const props = defineProps<{ cameraId?: string }>();
   const videoConstraints = computed<MediaTrackConstraints>(() => ({
     facingMode: "environment",
-    // deviceId: props.cameraId,
+    deviceId: props.cameraId,
   }));
 </script>
 <template>
