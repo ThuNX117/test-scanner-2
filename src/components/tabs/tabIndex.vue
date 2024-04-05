@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+  import { onMounted, ref } from "vue";
 
-import BarCodeScanner from '../barcode/BarCodeScanner.vue';
-import HTML5QRCODE from '../barcode/HTML5QRCODE.vue';
+  import BarCodeScanner from "../barcode/BarCodeScanner.vue";
+  import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
 
-const scannerName = ref("BarCodeScanner");
+  const scannerName = ref("BarCodeScanner");
   const bothRun = ref(false);
   const toggle = () => {
     if (scannerName.value === "BarCodeScanner") {
@@ -13,9 +13,21 @@ const scannerName = ref("BarCodeScanner");
       scannerName.value = "BarCodeScanner";
     }
   };
+  const devices = ref<MediaDeviceInfo[]>([]);
+  const getCameraList = () => {
+    navigator.mediaDevices.enumerateDevices().then((_devices: MediaDeviceInfo[]) => {
+      devices.value = _devices.filter((item) => item.kind === "videoinput");
+    });
+  };
+  onMounted(() => {
+    getCameraList();
+  });
 </script>
 <template>
   <div class="flex flex-row">
+    <p v-for="item in devices" :key="item.deviceId">
+      [{{ item.kind }}]-[{{ item.deviceId }}]
+    </p>
     <button @click="toggle">Toogle to {{ scannerName }}</button>
     <button @click="bothRun = !bothRun">bothRun</button>
     <template v-if="scannerName === 'HTML5QRCODE' || bothRun">

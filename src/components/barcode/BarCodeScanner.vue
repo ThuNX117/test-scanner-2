@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+  import { computed, ref } from "vue";
 
-import type { DetectedBarcode } from 'barcode-detector/pure';
-import { QrcodeStream } from 'vue-qrcode-reader';
+  import type { DetectedBarcode } from "barcode-detector/pure";
+  import { QrcodeStream } from "vue-qrcode-reader";
 
-const code = ref("-");
+  const code = ref("-");
 
   const turn = ref(0);
   const onDetect = (detectedCodes: DetectedBarcode[]) => {
@@ -14,9 +14,11 @@ const code = ref("-");
       turn.value = turn.value + 1;
     }
   };
-  const videoConstraints = {
+  // const props = defineProps<{ cameraId?: string }>();
+  const videoConstraints = computed<MediaTrackConstraints>(() => ({
     facingMode: "environment",
-  };
+    // deviceId: props.cameraId,
+  }));
 </script>
 <template>
   <div>
