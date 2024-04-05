@@ -1,8 +1,6 @@
 <script lang="ts" setup>
   import { onMounted, ref } from "vue";
 
-  import JsonViewer from "vue-json-viewer";
-
   import BarCodeScanner from "../barcode/BarCodeScanner.vue";
   import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
 

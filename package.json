@@ -12,7 +12,8 @@
     "element-plus": "^2.6.3",
     "vue": "^3.4.21",
     "vue-json-viewer": "^3.0.4",
-    "vue-qrcode-reader": "^5.5.3"
+    "vue-qrcode-reader": "^5.5.3",
+    "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
