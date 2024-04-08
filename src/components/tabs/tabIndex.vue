@@ -5,8 +5,7 @@
   import BarCodeScanner from "../barcode/BarCodeScanner.vue";
   import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
 
-  const { cameraId, trackCapability, getCameraList, getCapabilities, devices } =
-    cameraConfig();
+  const { trackCapability, getCameraList, getCapabilities, devices } = cameraConfig();
   const scannerName = ref("BarCodeScanner");
   const bothRun = ref(false);
   const toggle = () => {
@@ -16,7 +15,7 @@
       scannerName.value = "BarCodeScanner";
     }
   };
-
+  const cameraId = ref("");
   onBeforeMount(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
