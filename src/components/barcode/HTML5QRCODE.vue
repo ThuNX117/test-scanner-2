@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import {
-  onBeforeUnmount,
-  onMounted,
-  ref,
-} from 'vue';
+  import { defineProps, onBeforeUnmount, onMounted, ref } from "vue";
 
-import { Html5Qrcode } from 'html5-qrcode';
+  import { Html5Qrcode } from "html5-qrcode";
 
-let html5QrCode: Html5Qrcode | null = null;
+  let html5QrCode: Html5Qrcode | null = null;
   const turn = ref(0);
   const code = ref("");
-  const cameraId = ref("");
+  const props = defineProps<{ cameraId: string }>();
   const onScanSuccess = (decodedText: string) => {
     code.value = decodedText;
     turn.value = turn.value + 1;
@@ -23,18 +19,18 @@ let html5QrCode: Html5Qrcode | null = null;
 
       return;
     }
-    console.log("cameraId", cameraId.value);
+    console.log("cameraId", props.cameraId);
 
     const videoConstraints = {};
     const config = {
       fps: 10,
       videoConstraints,
     };
-    html5QrCode?.start({ facingMode: "environment" }, config, onScanSuccess, () => {});
+    html5QrCode?.start(props.cameraId, config, onScanSuccess, () => {});
   }
   onMounted(() => {
     html5QrCode = new Html5Qrcode("reader");
-    console.log("onMounted");
+    console.log("onMounted", props.cameraId);
     startScan();
   });
 

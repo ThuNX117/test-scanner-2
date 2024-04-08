@@ -1,9 +1,12 @@
 <script lang="ts" setup>
-  import { onMounted, ref } from "vue";
+  import { onBeforeMount, ref } from "vue";
 
+  import { cameraConfig } from "../../composables/cameraConfig";
   import BarCodeScanner from "../barcode/BarCodeScanner.vue";
   import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
 
+  const { cameraId, trackCapability, getCameraList, getCapabilities, devices } =
+    cameraConfig();
   const scannerName = ref("BarCodeScanner");
   const bothRun = ref(false);
   const toggle = () => {
@@ -13,62 +16,31 @@
       scannerName.value = "BarCodeScanner";
     }
   };
-  type trackCapabilityType = MediaDeviceInfo & { track: MediaTrackCapabilities[] };
-  const devices = ref<MediaDeviceInfo[]>([]);
-  const trackCapability = ref<trackCapabilityType[]>([]);
-  const getCameraList = () => {
-    navigator.mediaDevices.enumerateDevices().then((_devices: MediaDeviceInfo[]) => {
-      console.log(_devices);
-      const __devices = _devices.filter((item) => item.kind === "videoinput");
-      devices.value = __devices;
-      getCapabilities(__devices);
-    });
-    console.log(devices.value);
-  };
 
-  const getCapabilities = (_devices: MediaDeviceInfo[]) => {
-    let rs: trackCapabilityType[] = [];
-    _devices.forEach(async (device) => {
-      let stream = null;
-
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId: device.deviceId,
-          },
-        });
-        let result: MediaTrackCapabilities[] = [];
-        stream.getTracks().forEach((track) => {
-          result.push(track.getCapabilities());
-        });
-        rs.push({ ...device, track: result });
-
-        /* use the stream */
-      } catch (err) {
-        /* handle the error */
-      }
-    });
-    trackCapability.value = rs;
-    console.log("trackCapability.value", trackCapability.value);
-  };
-  onMounted(() => {
-    getCameraList();
-    // getCapabilities();
+  onBeforeMount(async () => {
+    devices.value = await getCameraList();
+    trackCapability.value = await getCapabilities(devices.value);
+    cameraId.value = trackCapability.value[0].device.deviceId;
+    console.log(cameraId);
   });
 </script>
 <template>
-  <div class="flex flex-row">
-    <div>
-      {{ trackCapability }}
-    </div>
+  <div class="flex flex-row" v-if="cameraId.length > 0">
     <button @click="toggle">Toogle to {{ scannerName }}</button>
     <button @click="bothRun = !bothRun">bothRun</button>
     <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
-      <BarCodeScanner :camera-id="devices[0].deviceId" />
+      <BarCodeScanner :camera-id="cameraId" />
     </template>
     <template v-if="scannerName === 'BarCodeScanner' || bothRun">
-      <HTML5QRCODE />
+      <HTML5QRCODE :camera-id="cameraId" />
     </template>
+
+    <div>
+      {{ devices }}
+    </div>
+    <div>
+      {{ trackCapability }}
+    </div>
   </div>
 </template>
 <style>
