@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { onBeforeMount, ref } from "vue";
+  import { onMounted, ref } from "vue";
 
   import { cameraConfig } from "../../composables/cameraConfig";
   import BarCodeScanner from "../barcode/BarCodeScanner.vue";
@@ -16,7 +16,7 @@
     }
   };
   const cameraId = ref("");
-  onBeforeMount(async () => {
+  onMounted(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
     cameraId.value = devices.value[0].deviceId;
@@ -25,21 +25,17 @@
 </script>
 <template>
   <div class="flex flex-row">
-    <button @click="toggle">Toogle to {{ scannerName }}</button>
-    <button @click="bothRun = !bothRun">bothRun</button>\
+    <button @click="toggle">Toggle to {{ scannerName }}</button>
+    <button @click="bothRun = !bothRun">bothRun</button>
     <p>cameraId: {{ cameraId }}</p>
-    <template v-if="cameraId">
-      <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
-        <BarCodeScanner :camera-id="cameraId" />
-      </template>
-      <template v-if="scannerName === 'BarCodeScanner' || bothRun">
-        <HTML5QRCODE :camera-id="cameraId" />
-      </template>
+
+    <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
+      <BarCodeScanner :camera-id="cameraId" />
+    </template>
+    <template v-if="scannerName === 'BarCodeScanner' || bothRun">
+      <HTML5QRCODE :camera-id="cameraId" />
     </template>
 
-    <div>
-      {{ devices }}
-    </div>
     <div>
       {{ trackCapability }}
     </div>
