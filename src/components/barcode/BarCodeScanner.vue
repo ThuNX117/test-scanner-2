@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { computed, ref, watch } from "vue";
+  import { computed, ref } from "vue";
 
   import { QrcodeStream } from "vue-qrcode-reader";
 
@@ -39,16 +39,7 @@
   const videoConstraints = computed<MediaTrackConstraints>(() => ({
     deviceId: props.cameraId,
   }));
-  const showQR = ref(false);
-  // watch(
-  //   () => props.cameraId,
-  //   () => {
-  //     showQR.value = false;
-  //     setTimeout(() => {
-  //       showQR.value = true;
-  //     }, 500);
-  //   }
-  // );
+
   function paintBoundingBox(
     detectedCodes: DetectedCode[],
     ctx: CanvasRenderingContext2D
