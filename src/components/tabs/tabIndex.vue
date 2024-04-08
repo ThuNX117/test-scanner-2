@@ -21,7 +21,7 @@
   onMounted(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
-    cameraId.value = devices.value[0].deviceId;
+    cameraId.value = trackCapability.value[0].device.deviceId;
     data.value = JSON.stringify({ data: trackCapability.value });
     console.log(data.value);
     console.log(cameraId);
@@ -33,12 +33,12 @@
     <button @click="bothRun = !bothRun">bothRun</button>
     <p>cameraId: {{ cameraId }}</p>
 
-    <!-- <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
+    <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
       <BarCodeScanner :camera-id="cameraId" />
     </template>
     <template v-if="scannerName === 'BarCodeScanner' || bothRun">
       <HTML5QRCODE :camera-id="cameraId" />
-    </template> -->
+    </template>
 
     <h1>trackCapability</h1>
     <div v-for="item in trackCapability" :key="item.device.deviceId">

@@ -31,7 +31,7 @@ export const cameraConfig = () => {
       const tracks = stream.getTracks();
       tracks.forEach(async (_track) => {
         const _trackInfo = _track.getCapabilities();
-        _result.push(_trackInfo);
+        if (_trackInfo.facingMode?.includes("environment")) _result.push(_trackInfo);
       });
       stream.getTracks().forEach((track) => track.stop());
     } catch (error) {
