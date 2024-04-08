@@ -40,9 +40,13 @@
       <HTML5QRCODE :camera-id="cameraId" />
     </template> -->
 
-    <div>data: {{ data }}</div>
-    <div>device: {{ devices }}</div>
-    <div>trackCapability: {{ trackCapability }}</div>
+    <h1>trackCapability</h1>
+    <div v-for="item in trackCapability" :key="item.device.deviceId">
+      <p>{{ item.device }}</p>
+      <small v-for="(cap, index) in item.track" :key="index">
+        {{ cap }}
+      </small>
+    </div>
   </div>
 </template>
 <style>
