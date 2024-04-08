@@ -16,17 +16,14 @@
   async function startScan() {
     if (html5QrCode === null) {
       alert("html5QrCode null");
-
       return;
     }
     console.log("cameraId", props.cameraId);
 
-    const videoConstraints = {};
     const config = {
       fps: 10,
-      videoConstraints,
     };
-    html5QrCode?.start(props.cameraId, config, onScanSuccess, () => {});
+    html5QrCode?.start({ deviceId: props.cameraId }, config, onScanSuccess, () => {});
   }
   onMounted(() => {
     html5QrCode = new Html5Qrcode("reader");
@@ -39,7 +36,6 @@
       return;
     }
     html5QrCode?.stop();
-    console.log("stoped ");
   });
 </script>
 <template>
