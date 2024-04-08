@@ -2,8 +2,9 @@
   import { onMounted, ref } from "vue";
 
   import { cameraConfig } from "../../composables/cameraConfig";
-  import BarCodeScanner from "../barcode/BarCodeScanner.vue";
-  import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
+
+  // import BarCodeScanner from "../barcode/BarCodeScanner.vue";
+  // import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
 
   const { trackCapability, getCameraList, getCapabilities, devices } = cameraConfig();
   const scannerName = ref("BarCodeScanner");
