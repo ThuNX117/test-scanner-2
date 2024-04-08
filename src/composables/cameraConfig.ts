@@ -9,11 +9,14 @@ export const cameraConfig = () => {
   const devices = ref<MediaDeviceInfo[]>([]);
   const trackCapability = ref<trackCapabilityType[]>([]);
   const getCameraList = async () => {
-    console.log("getCameraList");
     let result: MediaDeviceInfo[] = [];
-    const _devices: MediaDeviceInfo[] = await navigator.mediaDevices.enumerateDevices();
-    result = _devices.filter((item) => item.kind == "videoinput");
-    console.log("getCameraList >>", result);
+    try {
+      const _devices: MediaDeviceInfo[] = await navigator.mediaDevices.enumerateDevices();
+      result = _devices.filter((item) => item.kind == "videoinput");
+    } catch (error) {
+      alert("getCameraList" + error);
+    }
+
     return result;
   };
 
@@ -31,12 +34,11 @@ export const cameraConfig = () => {
       const tracks = stream.getTracks();
       tracks.forEach(async (_track) => {
         const _trackInfo = _track.getCapabilities();
-        // if (_trackInfo.facingMode?.includes("environment"))
         _result.push(_trackInfo);
+        _track.stop();
       });
-      stream.getTracks().forEach((track) => track.stop());
     } catch (error) {
-      alert("error" + error);
+      alert("getTrackData: " + error);
     }
     return {
       device: {

@@ -17,10 +17,13 @@
   };
   const data = ref<string>("");
   const cameraId = ref("");
+  const ready = ref(false);
   onMounted(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
     cameraId.value = trackCapability.value[0].device.deviceId;
+
+    ready.value = true;
     data.value = JSON.stringify({ data: trackCapability.value });
     console.log(data.value);
     console.log(cameraId);
@@ -31,11 +34,13 @@
     <button @click="toggle">Toggle to {{ scannerName }}</button>
     <button @click="bothRun = !bothRun">bothRun</button>
     <p>cameraId: {{ cameraId }}</p>
-    <template>
+    <template v-if="ready">
       <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
+        BarCodeScanner
         <BarCodeScanner :camera-id="cameraId" />
       </template>
       <template v-if="scannerName === 'BarCodeScanner' || bothRun">
+        HTML5QRCODE
         <HTML5QRCODE :camera-id="cameraId" />
       </template>
     </template>
