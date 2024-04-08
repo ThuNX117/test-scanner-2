@@ -32,16 +32,14 @@
     <button @click="bothRun = !bothRun">bothRun</button>
     <p>cameraId: {{ cameraId }}</p>
 
-    <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
+    <!-- <template v-if="scannerName === 'HTML5QRCODE' || bothRun">
       <BarCodeScanner :camera-id="cameraId" />
     </template>
     <template v-if="scannerName === 'BarCodeScanner' || bothRun">
       <HTML5QRCODE :camera-id="cameraId" />
-    </template>
+    </template> -->
 
-    <div>
-      {{ data }}
-    </div>
+    <div>data: {{ data }}</div>
   </div>
 </template>
 <style>
