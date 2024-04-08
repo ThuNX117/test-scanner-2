@@ -19,7 +19,7 @@
   onBeforeMount(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
-    cameraId.value = trackCapability.value[0].device.deviceId;
+    cameraId.value = devices.value[0].deviceId;
     console.log(cameraId);
   });
 </script>
