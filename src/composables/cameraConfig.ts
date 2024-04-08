@@ -18,19 +18,24 @@ export const cameraConfig = () => {
   };
 
   const getTrackData = async (_device: MediaDeviceInfo) => {
-    // each camera
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        deviceId: _device.deviceId,
-      },
-    });
-
     let _result: MediaTrackCapabilities[] = [];
-    const tracks = stream.getTracks();
-    tracks.forEach(async (_track) => {
-      const _trackInfo = _track.getCapabilities();
-      _result.push(_trackInfo);
-    });
+
+    try {
+      // each camera
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          deviceId: _device.deviceId,
+        },
+      });
+
+      const tracks = stream.getTracks();
+      tracks.forEach(async (_track) => {
+        const _trackInfo = _track.getCapabilities();
+        _result.push(_trackInfo);
+      });
+    } catch (error) {
+      alert("error" + error);
+    }
     return {
       device: {
         deviceId: _device.deviceId,
@@ -42,9 +47,13 @@ export const cameraConfig = () => {
   };
   const getCapabilities = async (_devices: MediaDeviceInfo[]) => {
     let result: trackCapabilityType[] = [];
-    for (const element of _devices) {
-      const data = await getTrackData(element);
-      result.push(data);
+    try {
+      for (const element of _devices) {
+        const data = await getTrackData(element);
+        result.push(data);
+      }
+    } catch (error) {
+      alert("getCapabilities" + error);
     }
     return result;
   };
