@@ -33,6 +33,7 @@ export const cameraConfig = () => {
         const _trackInfo = _track.getCapabilities();
         _result.push(_trackInfo);
       });
+      stream.getTracks().forEach((track) => track.stop());
     } catch (error) {
       alert("error" + error);
     }
