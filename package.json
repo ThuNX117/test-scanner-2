@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@matpool/vue-json-view": "^0.1.8",
+    "@tcstory/vue3-json-viewer": "^2.3.2",
+    "clipboard": "^2.0.11",
     "element-plus": "^2.6.3",
     "vue": "^3.4.21",
     "vue-json-viewer": "^3.0.4",

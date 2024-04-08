@@ -15,11 +15,14 @@
       scannerName.value = "BarCodeScanner";
     }
   };
+  const data = ref<string>("");
   const cameraId = ref("");
   onMounted(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
-    cameraId.value = devices.value[0].deviceId;
+    // cameraId.value = devices.value[0].deviceId;
+    data.value = JSON.stringify({ data: trackCapability.value });
+    console.log(data.value);
     console.log(cameraId);
   });
 </script>
@@ -37,7 +40,7 @@
     </template>
 
     <div>
-      {{ trackCapability }}
+      {{ data }}
     </div>
   </div>
 </template>
