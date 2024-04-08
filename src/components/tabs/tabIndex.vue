@@ -5,7 +5,8 @@
   import BarCodeScanner from "../barcode/BarCodeScanner.vue";
   import HTML5QRCODE from "../barcode/HTML5QRCODE.vue";
 
-  const { trackCapability, getCameraList, getCapabilities, devices } = cameraConfig();
+  const { trackCapability, getCameraList, getCapabilities, devices, getBestCamera } =
+    cameraConfig();
   const scannerName = ref("BarCodeScanner");
   const bothRun = ref(false);
   const toggle = () => {
@@ -15,24 +16,15 @@
       scannerName.value = "BarCodeScanner";
     }
   };
-  const data = ref<string>("");
   const cameraId = ref("");
   const ready = ref(false);
   onMounted(async () => {
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
-    cameraId.value = trackCapability.value[0].device.deviceId;
-    trackCapability.value.forEach((item) => {
-      item.track.forEach((_i) => {
-        if (_i.facingMode?.includes("environment")) {
-          cameraId.value = String(_i.deviceId);
-        }
-      });
-    });
+
+    const { id, width: _width, height: _height } = getBestCamera(trackCapability.value);
+    cameraId.value = id;
     ready.value = true;
-    data.value = JSON.stringify({ data: trackCapability.value });
-    console.log(data.value);
-    console.log(cameraId);
   });
 </script>
 <template>
