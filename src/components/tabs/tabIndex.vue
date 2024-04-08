@@ -41,6 +41,8 @@
     </template> -->
 
     <div>data: {{ data }}</div>
+    <div>device: {{ devices }}</div>
+    <div>trackCapability: {{ trackCapability }}</div>
   </div>
 </template>
 <style>
