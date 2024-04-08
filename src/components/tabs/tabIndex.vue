@@ -22,7 +22,13 @@
     devices.value = await getCameraList();
     trackCapability.value = await getCapabilities(devices.value);
     cameraId.value = trackCapability.value[0].device.deviceId;
-
+    trackCapability.value.forEach((item) => {
+      item.track.forEach((_i) => {
+        if (_i.facingMode?.includes("environment")) {
+          cameraId.value = String(_i.deviceId);
+        }
+      });
+    });
     ready.value = true;
     data.value = JSON.stringify({ data: trackCapability.value });
     console.log(data.value);
